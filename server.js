@@ -19,32 +19,41 @@ var articleone={
                     This is first article. This is first article. This is first article. This is first article. This is first article. This is first article.
                 </p>`
 }
-var htmltemplate= `<html>
-    <head>
-        <title>
-            ${title}
-        </title>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link href="/ui/style.css" rel="stylesheet" />
-       
-    </head>
-    <body>
-        <div class="container">
-            <div>
-                <a href="/">Home</a>
+function createtemplate(data){
+    var title=data.title;
+    var heading=data.heading;
+    var date=data.dtae;
+    var content=data.content;
+    
+    var htmltemplate= `<html>
+        <head>
+            <title>
+                ${title}
+            </title>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <link href="/ui/style.css" rel="stylesheet" />
+           
+        </head>
+        <body>
+            <div class="container">
+                <div>
+                    <a href="/">Home</a>
+                </div>
+                <h2>
+                ${heading}
+                </h2>
+                <div>
+                    ${date}
+                </div>
+                <div>
+                   ${content}
+                </div>
             </div>
-            ${heading}
-            <div>
-                ${date}
-            </div>
-            <div>
-               ${content}
-            </div>
-        </div>
-    </body>
-</html>
-`;
-
+        </body>
+    </html>
+    `;
+    return htmltemplate;
+}
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
@@ -54,7 +63,7 @@ app.get('/ui/style.css', function (req, res) {
 });
 
 app.get('/article-one',function(req,res){
-  res.sendFile(path.join(__dirname, 'ui', 'article-one.html'));
+  res.send(createtemplate(articleone));
 });
 
 app.get('/article-two',function(req,res){
